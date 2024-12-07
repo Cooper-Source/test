@@ -1,0 +1,24 @@
+name: Keep Codespace Alive
+
+on:
+  workflow_dispatch: # Manuelles Starten
+  schedule:
+    - cron: "*/5 * * * *"  # Alle 5 Minuten
+
+jobs:
+  keep_alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository klonen
+        uses: actions/checkout@v3
+
+      - name: Node.js installieren
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Abhängigkeiten installieren
+        run: npm install puppeteer
+
+      - name: Codespace aktiv halten
+        run: node keep_alive.js
